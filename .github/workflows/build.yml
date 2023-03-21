@@ -24,11 +24,12 @@ jobs:
           unzip index.html
       - name: Build 
         run: |
-          cargo build --release
           cd mozilla-central-c000b8aa17e1/testing/
           cd geckodriver 
+          cargo build --release
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: geckodriver-arm
-          path: geckodriver/target/armv7-unknown-linux-gnueabihf/release/geckodriver
+          path: geckodriver/target/release/geckodriver
