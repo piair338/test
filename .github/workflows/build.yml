@@ -23,6 +23,6 @@ jobs:
 
     - name: Build geckodriver
       run: |
-        git clone https://github.com/mozilla/geckodriver.git
+        run: git clone https://hg.mozilla.org/mozilla-central/file/tip/testing/geckodriver
         cd geckodriver
         cargo build --release --features=webdriver
