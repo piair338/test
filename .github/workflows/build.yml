@@ -20,7 +20,7 @@ jobs:
         run: 
           wget https://hg.mozilla.org/mozilla-central/archive/tip.zip/testing/geckodriver/
       - name: Set up 2
-        run: 
+        run: |
           unzip index.html
           cd mozilla-central-c000b8aa17e1/testing/
           cd geckodriver && cargo build --release --target=armv7-unknown-linux-gnueabihf
