@@ -1,0 +1,28 @@
+name: Build geckodriver for ARM
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y curl build-essential git libssl-dev
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    - name: Build geckodriver
+      run: |
+        git clone https://github.com/mozilla/geckodriver.git
+        cd geckodriver
+        cargo build --release --features=webdriver
