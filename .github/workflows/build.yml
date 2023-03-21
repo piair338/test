@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y curl build-essential git libssl-dev
+      run: sudo apt-get update && sudo apt-get install -y curl build-essential git libssl-dev wget
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -23,6 +23,7 @@ jobs:
 
     - name: Build geckodriver
       run: |
-        git clone https://hg.mozilla.org/mozilla-central/file/tip/testing/geckodriver
-        cd geckodriver
+        wget https://hg.mozilla.org/mozilla-central/archive/tip.zip/testing/geckodriver/
+        unzip index.html
+        cd mozilla-central-c000b8aa17e1/testing/geckodriver/
         cargo build --release --features=webdriver
