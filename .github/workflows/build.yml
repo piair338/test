@@ -18,7 +18,7 @@ jobs:
         run: rustup target add armv7-unknown-linux-gnueabihf
       - name: Build GeckoDriver for ARM
         run: 
-          wget https://hg.mozilla.org/mozilla-central/archive/tip.zip/testing/geckodriver/
+          wget https://hg.mozilla.org/mozilla-central/archive/tip.zip/testing/geckodriver/ &&
           unzip index.html
           cd mozilla-central-c000b8aa17e1/testing/
           cd geckodriver && cargo build --release --target=armv7-unknown-linux-gnueabihf
