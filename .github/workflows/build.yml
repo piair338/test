@@ -1,29 +1,25 @@
-name: Build geckodriver for ARM
-
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
   build:
+    name: Build GeckoDriver
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y curl build-essential git libssl-dev wget
-
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        components: rustfmt, clippy
-
-    - name: Build geckodriver
-      run: |
-        wget https://hg.mozilla.org/mozilla-central/archive/tip.zip/testing/geckodriver/
-        unzip index.html
-        cd mozilla-central-c000b8aa17e1/testing/geckodriver/
-        cargo build --release --features=webdriver
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y git-core curl build-essential openssl libssl-dev
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Set up ARM target
+        run: rustup target add armv7-unknown-linux-gnueabihf
+      - name: Build GeckoDriver for ARM
+        run: cd geckodriver && cargo build --release --target=armv7-unknown-linux-gnueabihf
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: geckodriver-arm
+          path: geckodriver/target/armv7-unknown-linux-gnueabihf/release/geckodriver
